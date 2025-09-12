@@ -1,13 +1,18 @@
 import "./bootstrap";
 
 // Toggle password visibility
-const toggle = document.getElementById("togglePassword");
-const password = document.getElementById("password");
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".togglePassword").forEach((icon) => {
+        icon.addEventListener("click", () => {
+            const input = icon.previousElementSibling; // ambil input sebelum icon
+            if (!input) return;
 
-toggle.addEventListener("click", () => {
-    const type =
-        password.getAttribute("type") === "password" ? "text" : "password";
-    password.setAttribute("type", type);
-    toggle.classList.toggle("bi-eye");
-    toggle.classList.toggle("bi-eye-slash");
+            const type = input.type === "password" ? "text" : "password";
+            input.type = type;
+
+            // toggle ikon
+            icon.classList.toggle("bi-eye");
+            icon.classList.toggle("bi-eye-slash");
+        });
+    });
 });

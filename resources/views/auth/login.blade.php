@@ -18,7 +18,7 @@
         <input type="password" name="password" id="password" placeholder="Enter your password"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-10"
           required />
-        <i class="bi bi-eye absolute right-3 top-3 cursor-pointer text-gray-500"></i>
+        <i class="bi bi-eye absolute right-3 top-3 cursor-pointer text-gray-500 togglePassword"></i>
       </div>
       <div class="text-right mt-1">
         <a href="#" class="text-xs text-blue-600 hover:underline">Forgot Your Password?</a>
