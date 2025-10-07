@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ScheduleController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('dashboard.index');
-})->name('dashboard');
+Route::get('/', [ScheduleController::class, 'index'])->name('dashboard');
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -28,3 +29,5 @@ Route::post('/logout', function (Request $request) {
     $request->session()->regenerateToken();
     return redirect()->route('login');
 })->name('logout');
+
+Route::resource('schedules', ScheduleController::class)->except(['index'])->middleware('auth');
