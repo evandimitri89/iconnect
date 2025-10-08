@@ -10,20 +10,17 @@
 
 <body class="bg-gray-100">
 
-  <div class="flex min-h-screen">
-    {{-- Sidebar --}}
-    @include('layouts.partials.sidebar')
+  {{-- Sidebar fixed --}}
+  @include('layouts.partials.sidebar')
 
-    <div class="flex-1 flex flex-col">
-      {{-- Main Content --}}
-      <main class="p-6">
-        @yield('content')
-      </main>
-
-    </div>
+  {{-- Main Content --}}
+  <div class="ml-60 flex-1 min-h-screen flex flex-col">
+    <main class="p-6 overflow-y-auto">
+      @yield('content')
+    </main>
   </div>
-  <script src="//unpkg.com/alpinejs" defer></script>
 
+  <script src="//unpkg.com/alpinejs" defer></script>
 </body>
 
 </html>
