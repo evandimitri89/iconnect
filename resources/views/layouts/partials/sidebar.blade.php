@@ -2,27 +2,29 @@
   <div class="p-3 text-lg font-bold">iConnect</div>
 
   <ul class="space-y-1 px-3">
-    <li><a href="{{ route('dashboard') }}" class="block px-3 py-1 hover:bg-blue-700 rounded-md">Dashboard</a></li>
-    <li><a href="#" class="block px-3 py-1 hover:bg-blue-700 rounded-md">Extracurricular</a></li>
-    <li><a href="#" class="block px-3 py-1 hover:bg-blue-700 rounded-md">Room Reservation</a></li>
-    <li><a href="{{ route('lostfound.index') }}" class="block px-3 py-1 hover:bg-blue-700 rounded-md">Lost & Found</a>
+    <li><a href="{{ route('dashboard') }}" class="block px-4 py-2 hover:bg-blue-700 rounded-md text-base">Dashboard</a>
     </li>
-    <li><a href="#" class="block px-3 py-1 hover:bg-blue-700 rounded-md">Users</a></li>
+    <li><a href="#" class="block px-4 py-2 hover:bg-blue-700 rounded-md text-base">Extracurricular</a></li>
+    <li><a href="#" class="block px-4 py-2 hover:bg-blue-700 rounded-md text-base">Room Reservation</a></li>
+    <li><a href="{{ route('lostfound.index') }}" class="block px-4 py-2 hover:bg-blue-700 rounded-md text-base">Lost &
+        Found</a>
+    </li>
+    <li><a href="#" class="block px-3 py-2 hover:bg-blue-700 rounded-md text-base">Users</a></li>
   </ul>
 
-  <div class="px-3 py-2 border-t border-blue-500 mt-2">
-    <div class="text-[10px] text-white/50 font-bold uppercase">OSIS</div>
+  <div class="px-4 py-2 border-t border-blue-500 mt-2">
+    <div class="text-[12px] text-white/50 font-bold uppercase">OSIS</div>
     <ul>
-      <li><a href="#" class="block px-3 py-1 hover:bg-blue-700 rounded-md">Inventory</a></li>
-      <li><a href="#" class="block px-3 py-1 hover:bg-blue-700 rounded-md">Meeting</a></li>
+      <li><a href="#" class="block px-4 py-2 hover:bg-blue-700 rounded-md text-base">Inventory</a></li>
+      <li><a href="#" class="block px-4 py-2 hover:bg-blue-700 rounded-md text-base">Meeting</a></li>
     </ul>
   </div>
 
-  <div class="px-3 py-2 border-t border-blue-500 mt-2">
-    <div class="text-[10px] text-white/50 font-bold uppercase">Preferences</div>
+  <div class="px-4 py-2 border-t border-blue-500 mt-2">
+    <div class="text-[12px] text-white/50 font-bold uppercase">Preferences</div>
     <ul>
       <li><a href="{{ route('notification.index') }}"
-          class="block px-3 py-1 hover:bg-blue-700 rounded-md">Notification</a></li>
+          class="block px-4 py-2 hover:bg-blue-700 rounded-md text-base">Notification</a></li>
     </ul>
   </div>
 

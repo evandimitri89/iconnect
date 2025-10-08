@@ -24,36 +24,36 @@
       <thead>
         <tr>
           <th
-            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-500 text-left text-xs font-semibold text-white uppercase tracking-wider">
+            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-500 text-left text-base text-white uppercase tracking-wider">
             #</th>
           <th
-            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-500 text-left text-xs font-semibold text-white uppercase tracking-wider">
+            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-500 text-left text-base text-white uppercase tracking-wider">
             Subject</th>
           <th
-            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-500 text-left text-xs font-semibold text-white uppercase tracking-wider">
+            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-500 text-left text-base text-white uppercase tracking-wider">
             Type</th>
           <th
-            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-500 text-left text-xs font-semibold text-white uppercase tracking-wider">
+            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-500 text-left text-base text-white uppercase tracking-wider">
             Description</th>
           <th
-            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-500 text-left text-xs font-semibold text-white uppercase tracking-wider">
+            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-500 text-left text-base text-white uppercase tracking-wider">
             Status</th>
           <th
-            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-500 text-left text-xs font-semibold text-white uppercase tracking-wider">
+            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-500 text-left text-base text-white uppercase tracking-wider">
             Deadline</th>
           <th
-            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-500 text-left text-xs font-semibold text-white uppercase tracking-wider">
+            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-500 text-left text-base text-white uppercase tracking-wider">
             Action</th>
         </tr>
       </thead>
       <tbody>
         @forelse ($schedules as $index => $schedule)
           <tr>
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ $index + 1 }}</td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ $schedule->subject }}</td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ $schedule->type }}</td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{ $schedule->description }}</td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-base">{{ $index + 1 }}</td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-base">{{ $schedule->subject }}</td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-base">{{ $schedule->type }}</td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-base">{{ $schedule->description }}</td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-base">
               @php
                 $statusColors = [
                     'Pending' => 'bg-yellow-200 text-yellow-800',
@@ -66,10 +66,10 @@
                 {{ $schedule->status }}
               </span>
             </td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-base">
               {{ $schedule->deadline ? \Carbon\Carbon::parse($schedule->deadline)->format('d M Y') : '-' }}
             </td>
-            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm flex space-x-2">
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-base flex space-x-2">
               {{-- Edit --}}
               <a href="{{ route('schedules.edit', $schedule->id) }}" class="text-blue-500 hover:text-blue-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
