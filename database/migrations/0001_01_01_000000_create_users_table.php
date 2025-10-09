@@ -15,6 +15,14 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('role')->default('user');
+            $table->string('nis', 20)->unique()->nullable();
+            $table->string('nisn', 20)->unique()->nullable();
+            $table->string('birth_place')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->string('religion')->nullable();
+            $table->enum('gender', ['Laki-laki', 'Perempuan'])->nullable();
+            $table->string('phone', 15)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

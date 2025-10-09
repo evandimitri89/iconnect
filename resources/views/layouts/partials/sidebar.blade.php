@@ -42,7 +42,7 @@
     <!-- Dropdown -->
     <div x-show="open" x-cloak @click.away="open = false"
       class="absolute bottom-12 left-0 w-full bg-blue-700 rounded-md shadow-lg overflow-hidden text-sm">
-      <a href="#" class="block px-4 py-2 hover:bg-blue-600">Profile</a>
+      <a href="{{ route('profile') }}" class="block px-4 py-2 hover:bg-blue-600">Profile</a>
       <form method="POST" action="{{ route('logout') }}">
         @csrf
         <button type="submit" class="w-full text-left px-4 py-2 hover:bg-blue-600">Logout</button>
