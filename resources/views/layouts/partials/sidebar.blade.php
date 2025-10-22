@@ -1,30 +1,36 @@
-<aside class="fixed top-0 left-0 h-screen w-60 bg-blue-600 text-white flex flex-col text-sm z-50" x-data="{ open: false }">
+<aside class="fixed top-0 left-0 h-screen w-60 bg-[#1E88E5] text-white flex flex-col text-sm z-50"
+  x-data="{ open: false }">
   <div class="p-3 text-lg font-bold">iConnect</div>
 
-  <ul class="space-y-1 px-3">
-    <li><a href="{{ route('dashboard') }}" class="block px-4 py-2 hover:bg-blue-700 rounded-md text-base">Dashboard</a>
-    </li>
-    <li><a href="#" class="block px-4 py-2 hover:bg-blue-700 rounded-md text-base">Extracurricular</a></li>
-    <li><a href="#" class="block px-4 py-2 hover:bg-blue-700 rounded-md text-base">Room Reservation</a></li>
-    <li><a href="{{ route('lostfound.index') }}" class="block px-4 py-2 hover:bg-blue-700 rounded-md text-base">Lost &
-        Found</a>
-    </li>
-    <li><a href="#" class="block px-3 py-2 hover:bg-blue-700 rounded-md text-base">Users</a></li>
-  </ul>
-
-  <div class="px-4 py-2 border-t border-blue-500 mt-2">
-    <div class="text-[12px] text-white/50 font-bold uppercase">OSIS</div>
-    <ul>
-      <li><a href="#" class="block px-4 py-2 hover:bg-blue-700 rounded-md text-base">Inventory</a></li>
-      <li><a href="#" class="block px-4 py-2 hover:bg-blue-700 rounded-md text-base">Meeting</a></li>
+  <div class="px-3 py-2 mt-2">
+    <div class="text-[10px] text-white/50 font-bold py-1">Main Menu</div>
+    <ul class="space-y-1 px-3">
+      <li><a href="{{ route('dashboard') }}" class="block px-3 py-1 hover:bg-[#2978BD] rounded-md text-base">Dashboard</a>
+      </li>
+      <li><a href="#" class="block px-3 py-1 hover:bg-[#2978BD] rounded-md text-base">Extracurricular</a></li>
+      <li><a href="#" class="block px-3 py-1 hover:bg-[#2978BD] rounded-md text-base">Room Reservation</a>
+      </li>
+      <li><a href="{{ route('lostfound.index') }}" class="block px-3 py-1 hover:bg-[#2978BD] rounded-md text-base">Lost
+          &
+          Found</a>
+      </li>
+      <li><a href="#" class="block px-3 py-1 hover:bg-[#2978BD] rounded-md text-base">Users</a></li>
     </ul>
   </div>
 
-  <div class="px-4 py-2 border-t border-blue-500 mt-2">
-    <div class="text-[12px] text-white/50 font-bold uppercase">Preferences</div>
+  <div class="px-3 py-2 border-t border-white-300 mt-2">
+    <div class="text-[10px] text-white/50 font-bold uppercase py-1">OSIS</div>
+    <ul>
+      <li><a href="#" class="block px-3 py-1 hover:bg-[#2978BD] rounded-md text-base">Inventory</a></li>
+      <li><a href="#" class="block px-3 py-1 hover:bg-[#2978BD] rounded-md text-base">Meeting</a></li>
+    </ul>
+  </div>
+
+  <div class="px-3 py-2 border-t border-white-300 mt-2">
+    <div class="text-[10px] text-white/50 font-bold py-1">Preferences</div>
     <ul>
       <li><a href="{{ route('notification.index') }}"
-          class="block px-4 py-2 hover:bg-blue-700 rounded-md text-base">Notification</a></li>
+          class="block px-3 py-1 hover:bg-[#2978BD] rounded-md text-base">Notification</a></li>
     </ul>
   </div>
 
@@ -41,11 +47,11 @@
 
     <!-- Dropdown -->
     <div x-show="open" x-cloak @click.away="open = false"
-      class="absolute bottom-12 left-0 w-full bg-blue-700 rounded-md shadow-lg overflow-hidden text-sm">
-      <a href="{{ route('profile') }}" class="block px-4 py-2 hover:bg-blue-600">Profile</a>
+      class="absolute bottom-12 left-0 w-full bg-[#2978BD] rounded-md shadow-lg overflow-hidden text-sm">
+      <a href="{{ route('profile') }}" class="block px-4 py-2 hover:bg-[#1E88E5]">Profile</a>
       <form method="POST" action="{{ route('logout') }}">
         @csrf
-        <button type="submit" class="w-full text-left px-4 py-2 hover:bg-blue-600">Logout</button>
+        <button type="submit" class="w-full text-left px-4 py-2 hover:bg-[#1E88E5]">Logout</button>
       </form>
     </div>
   </div>

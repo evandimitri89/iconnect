@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Schedules; // pakai model yang benar
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ScheduleController extends Controller
@@ -13,7 +13,7 @@ class ScheduleController extends Controller
 
     public function index()
     {
-        $schedules = Schedules::where('user_id', Auth::id())->latest()->get();
+        $schedules = Schedule::where('user_id', Auth::id())->latest()->get();
         return view('dashboard.index', compact('schedules'));
     }
 
@@ -32,7 +32,7 @@ class ScheduleController extends Controller
             'deadline' => 'nullable|date',
         ]);
 
-        Schedules::create([
+        Schedule::create([
             'subject' => $request->subject,
             'type' => $request->type,
             'description' => $request->description,
@@ -44,13 +44,13 @@ class ScheduleController extends Controller
         return redirect()->route('dashboard')->with('success', 'Schedule berhasil ditambahkan.');
     }
 
-    public function edit(Schedules $schedule)
+    public function edit(Schedule $schedule)
     {
         $this->authorize('update', $schedule);
         return view('schedules.edit', compact('schedule'));
     }
 
-    public function update(Request $request, Schedules $schedule)
+    public function update(Request $request, Schedule $schedule)
     {
         $request->validate([
             'subject' => 'required|string|max:255',
@@ -65,11 +65,16 @@ class ScheduleController extends Controller
         return redirect()->route('dashboard')->with('success', 'Schedule berhasil diperbarui.');
     }
 
-    public function destroy(Schedules $schedule)
+    // Halaman konfirmasi delete
+    public function delete(Schedule $schedule)
     {
-        $this->authorize('delete', $schedule);
-        $schedule->delete();
+        return view('schedules.delete', compact('schedule'));
+    }
 
+    // Eksekusi delete
+    public function destroy(Schedule $schedule)
+    {
+        $schedule->delete();
         return redirect()->route('dashboard')->with('success', 'Schedule berhasil dihapus.');
     }
 }

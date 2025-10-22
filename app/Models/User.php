@@ -45,8 +45,7 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        // Otomatis mengkonversi kolom tanggal_lahir menjadi objek tanggal (Carbon)
-        'tanggal_lahir' => 'date',
+        'birth_date' => 'date',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];

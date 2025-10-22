@@ -15,13 +15,22 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/lostfound', function () {
-    return view('lostfound.index');
-})->name('lostfound.index');
+// Profile
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
+// Notification
 Route::get('/notification', function () {
     return view('notification.index');
 })->name('notification.index');
 
+// Lost and Found
+Route::get('/lostfound', function () {
+    return view('lostfound.index');
+})->name('lostfound.index');
+
+// Schedules
 Route::resource('schedules', ScheduleController::class)->middleware('auth');
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+Route::get('/schedules/{schedule}/delete', [ScheduleController::class, 'delete'])
+    ->name('schedules.delete')
+    ->middleware('auth');
+
