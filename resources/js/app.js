@@ -16,3 +16,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+// Sidebar collapse state persistence
+document.addEventListener("alpine:init", () => {
+    Alpine.data("sidebar", () => ({
+        collapsed: false,
+
+        init() {
+            // Load state dari localStorage
+            this.collapsed =
+                localStorage.getItem("sidebarCollapsed") === "true";
+
+            // Watch perubahan collapsed
+            this.$watch("collapsed", (value) => {
+                localStorage.setItem("sidebarCollapsed", value);
+            });
+        },
+    }));
+});

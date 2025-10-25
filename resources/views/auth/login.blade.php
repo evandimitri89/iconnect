@@ -40,9 +40,6 @@
           <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
         @enderror
       </div>
-      <div class="text-right mt-1">
-        <a href="{{ route('password.request') }}" class="text-xs text-blue-600 hover:underline">Forgot Your Password?</a>
-      </div>
     </div>
 
     {{-- Remember Me --}}
