@@ -4,7 +4,7 @@ import "./bootstrap";
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".togglePassword").forEach((icon) => {
         icon.addEventListener("click", () => {
-            const input = icon.previousElementSibling; // ambil input sebelum icon
+            const input = icon.previousElementSibling;
             if (!input) return;
 
             const type = input.type === "password" ? "text" : "password";

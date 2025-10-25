@@ -41,8 +41,15 @@
         @enderror
       </div>
       <div class="text-right mt-1">
-        <a href="#" class="text-xs text-blue-600 hover:underline">Forgot Your Password?</a>
+        <a href="{{ route('password.request') }}" class="text-xs text-blue-600 hover:underline">Forgot Your Password?</a>
       </div>
+    </div>
+
+    {{-- Remember Me --}}
+    <div class="flex items-center">
+      <input id="remember" type="checkbox" name="remember"
+        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+      <label for="remember" class="ml-2 text-sm text-gray-700">Remember Me</label>
     </div>
 
     {{-- Button --}}
