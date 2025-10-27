@@ -20,6 +20,8 @@ return new class extends Migration {
             $table->string('nisn', 20)->unique()->nullable();
             $table->string('birth_place')->nullable();
             $table->date('birth_date')->nullable();
+            $table->string('profile_photo')->nullable();
+            $table->text('address')->nullable();
             $table->string('religion')->nullable();
             $table->enum('gender', ['Laki-laki', 'Perempuan'])->nullable();
             $table->string('phone', 15)->nullable();
