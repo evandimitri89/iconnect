@@ -25,8 +25,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
 });
 
-
-
 // Notification
 Route::get('/notification', function () {
     return view('notification.index');

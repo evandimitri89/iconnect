@@ -38,44 +38,30 @@ document.addEventListener("alpine:init", () => {
     }));
 });
 
-Alpine.data("profile", () => ({
-    editing: false,
-    previewUrl: null,
-
-    form: {
-        name: user.name,
-        nis: user.nis,
-        nisn: user.nisn,
-        gender: user.gender,
-        birth_place: user.birth_place,
-        birth_date: user.birth_date,
-        address: user.address,
-        phone: user.phone,
-        email: user.email,
-        religion: user.religion,
-    },
-
-    startEdit() {
-        this.editing = true;
-        this.original = JSON.parse(JSON.stringify(this.form));
-    },
-
-    cancelEdit() {
-        this.form = JSON.parse(JSON.stringify(this.original));
-        this.previewUrl = null;
-        this.editing = false;
-    },
-
-    triggerFile() {
-        this.$refs.file.click();
-    },
-
-    fileChosen(e) {
-        const file = e.target.files[0];
-        if (file) {
-            this.previewUrl = URL.createObjectURL(file);
-        }
-    },
-}));
-
 Alpine.start();
+
+document.addEventListener("DOMContentLoaded", () => {
+    const avatarWrapper = document.getElementById("avatarWrapper");
+    const fileInput = document.getElementById("profilePhotoInput");
+    const preview = document.getElementById("avatarPreview");
+
+    avatarWrapper.addEventListener("click", () => fileInput.click());
+
+    fileInput.addEventListener("change", () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            if (preview.tagName === "IMG") {
+                preview.src = e.target.result;
+            } else {
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                img.className = "w-24 h-24 rounded-full object-cover shadow";
+                preview.replaceWith(img);
+            }
+        };
+        reader.readAsDataURL(file);
+    });
+});

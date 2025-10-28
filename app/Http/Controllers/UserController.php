@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
     public function profile()
     {
         $user = auth()->user();
-        return view('profile.index', [
-            'user' => $user
-        ]);
+        return view('profile.index', compact('user'));
     }
+
 
     public function editProfile()
     {
@@ -24,12 +25,11 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
-
         $user = auth()->user();
 
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'nis' => 'nullable|string|max:20|unique:users,nis,' . $user->id,
+            'nis' => 'nullable|string|max:4|unique:users,nis,' . $user->id,
             'nisn' => 'nullable|string|max:20|unique:users,nisn,' . $user->id,
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
             'birth_place' => 'nullable|string|max:255',
@@ -38,28 +38,30 @@ class UserController extends Controller
             'gender' => ['nullable', Rule::in(['Laki-laki', 'Perempuan'])],
             'phone' => 'nullable|string|max:15',
             'address' => 'nullable|string',
-            'profile_photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048'
+            'profile_photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
-        // Handle photo upload
-        if ($request->hasFile('profile_photo')) {
-            $file = $request->file('profile_photo');
-
-            $filename = 'profile_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
-
-            $file->storeAs('public/profile_photos', $filename);
-
-            if ($user->profile_photo && Storage::exists('public/profile_photos/' . $user->profile_photo)) {
-                Storage::delete('public/profile_photos/' . $user->profile_photo);
-            }
-
-            $validated['profile_photo'] = $filename;
-        } else {
-            unset($validated['profile_photo']);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
-        // Update user
-        $user->update($validated);
+        $validated = $validator->validated();
+
+        $user->fill($validated);
+        if ($request->hasFile('profile_photo')) {
+            if ($user->profile_photo) {
+                Storage::disk('public')->delete('profile_photos/' . $user->profile_photo);
+            }
+
+            $filename = time() . '.' . $request->profile_photo->extension();
+            $request->profile_photo->storeAs('profile_photos', $filename, 'public');
+
+            $user->profile_photo = $filename;
+        }
+
+        $user->save();
 
         return redirect()->route('profile')->with('success', 'Profile updated successfully.');
     }

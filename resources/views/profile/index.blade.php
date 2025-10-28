@@ -3,27 +3,24 @@
 @section('title', 'Profile')
 
 @section('content')
-  <script>
-    window.user = @json($user);
-  </script>
-
   <div class="max-w-5xl mx-auto">
 
     {{-- Blue Header --}}
     <div class="bg-gradient-to-r from-[#2596f3] to-[#1e88e5] rounded-xl p-8 mt-6 shadow-lg">
       <div class="flex items-center gap-6 text-white">
 
-        {{-- Avatar --}}
-        <div
-          class="w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-lg bg-white flex items-center justify-center">
-          @if ($user->profile_photo)
-            <img src="{{ asset('storage/profile_photos/' . $user->profile_photo) }}" class="w-full h-full object-cover">
-          @else
-            <i class="bi bi-person-circle text-3xl text-gray-400"></i>
-          @endif
-
+        {{-- Avatar Upload (Click to upload) --}} <div class="flex items-center gap-4">
+          <div id="avatarWrapper" class="w-24 h-24 flex items-center justify-center cursor-pointer">
+            @if ($user->profile_photo)
+              <img id="avatarPreview" src="{{ asset('storage/profile_photos/' . $user->profile_photo) }}"
+                class="w-24 h-24 rounded-full object-cover shadow">
+            @else
+              <i id="avatarPreview" class="bi bi-person-circle text-[80px] text-white"></i>
+            @endif
+          </div>
 
         </div>
+
 
         {{-- User Info --}}
         <div>
@@ -36,111 +33,98 @@
 
     {{-- White Form Card --}}
     <div class="bg-white rounded-xl mt-8 p-6 shadow-lg">
-      <form x-data="profile()" @submit="editing = false" action="{{ route('profile.update') }}" method="POST"
-        enctype="multipart/form-data">
+
+      {{-- Success message --}}
+      @if (session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+          <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+      @endif
+
+      {{-- ERROR message --}}
+      @if ($errors->any())
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+          <ul class="list-disc ps-5 text-sm">
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
+
+
+      <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
-        <div class="grid grid-cols-2 gap-6">
+        <input type="file" id="profilePhotoInput" name="profile_photo" accept="image/*" class="hidden">
 
+        <div class="grid grid-cols-2 gap-6">
           {{-- LEFT --}}
           <div>
             <label class="block text-xs font-semibold text-gray-600">Full Name</label>
-            <input x-model="form.name" name="name" type="text"
-              class="mt-1 block w-full rounded-md border-gray-200 bg-gray-50 p-2" x-bind:disabled="!editing">
+            <input name="name" type="text" value="{{ old('name', $user->name) }}"
+              class="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 p-2 border @error('name') border-red-500 @enderror">
+            @error('name')
+              <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+            @enderror
 
             <label class="block text-xs font-semibold text-gray-600 mt-4">NIS</label>
-            <input x-model="form.nis" name="nis" type="text"
-              class="mt-1 block w-full rounded-md border-gray-200 bg-gray-50 p-2" x-bind:disabled="!editing">
+            <input name="nis" type="text" value="{{ old('nis', $user->nis) }}"
+              class="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 p-2">
 
             <label class="block text-xs font-semibold text-gray-600 mt-4">NISN</label>
-            <input x-model="form.nisn" name="nisn" type="text"
-              class="mt-1 block w-full rounded-md border-gray-200 bg-gray-50 p-2" x-bind:disabled="!editing">
+            <input name="nisn" type="text" value="{{ old('nisn', $user->nisn) }}"
+              class="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 p-2">
 
             <label class="block text-xs font-semibold text-gray-600 mt-4">Gender</label>
-            <select x-model="form.gender" name="gender"
-              class="mt-1 block w-full rounded-md border-gray-200 bg-gray-50 p-2" x-bind:disabled="!editing">
-              <option value="">Pilih</option>
-              <option value="Laki-laki">Laki-laki</option>
-              <option value="Perempuan">Perempuan</option>
+            <select name="gender" class="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 p-2">
+              <option value="">Choose</option>
+              <option value="Laki-laki" {{ old('gender', $user->gender) == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
+              </option>
+              <option value="Perempuan" {{ old('gender', $user->gender) == 'Perempuan' ? 'selected' : '' }}>Perempuan
+              </option>
             </select>
 
             <label class="block text-xs font-semibold text-gray-600 mt-4">Tempat & Tanggal Lahir</label>
             <div class="flex gap-2">
-              <input x-model="form.birth_place" name="birth_place" type="text"
-                class="mt-1 block w-1/2 rounded-md border-gray-200 bg-gray-50 p-2" x-bind:disabled="!editing">
-              <input x-model="form.birth_date" name="birth_date" type="date"
-                class="mt-1 block w-1/2 rounded-md border-gray-200 bg-gray-50 p-2" x-bind:disabled="!editing">
+              <input name="birth_place" type="text" value="{{ old('birth_place', $user->birth_place) }}"
+                class="mt-1 block w-1/2 rounded-md border-gray-300 bg-gray-100 p-2">
+              <input name="birth_date" type="date" value="{{ old('birth_date', $user->birth_date) }}"
+                class="mt-1 block w-1/2 rounded-md border-gray-300 bg-gray-100 p-2">
             </div>
-
-            <label class="block text-xs font-semibold text-gray-600 mt-4">Address</label>
-            <textarea x-model="form.address" name="address" class="mt-1 block w-full rounded-md border-gray-200 bg-gray-50 p-2"
-              x-bind:disabled="!editing"></textarea>
-
-            <label class="block text-xs font-semibold text-gray-600 mt-4">Phone Number</label>
-            <input x-model="form.phone" name="phone" type="text"
-              class="mt-1 block w-full rounded-md border-gray-200 bg-gray-50 p-2" x-bind:disabled="!editing">
           </div>
 
           {{-- RIGHT --}}
           <div>
+            <label class="block text-xs font-semibold text-gray-600 mt-4">Address</label>
+            <textarea name="address" class="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 p-2">{{ old('address', $user->address) }}</textarea>
+
+            <label class="block text-xs font-semibold text-gray-600 mt-4">Phone Number</label>
+            <input name="phone" type="text" value="{{ old('phone', $user->phone) }}"
+              class="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 p-2">
+
             <label class="block text-xs font-semibold text-gray-600">Email</label>
-            <input x-model="form.email" name="email" type="text"
-              class="mt-1 block w-full rounded-md border-gray-200 bg-gray-50 p-2" x-bind:disabled="!editing">
+            <input name="email" type="email" value="{{ old('email', $user->email) }}"
+              class="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 p-2 @error('email') border-red-500 @enderror">
+            @error('email')
+              <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+            @enderror
 
             <label class="block text-xs font-semibold text-gray-600 mt-4">Religion</label>
-            <input x-model="form.religion" name="religion" type="text"
-              class="mt-1 block w-full rounded-md border-gray-200 bg-gray-50 p-2" x-bind:disabled="!editing">
-
-            <label class="block text-xs font-semibold text-gray-600 mt-4">Profile Photo</label>
-            <div class="mt-2 flex items-center gap-4">
-              <div class="w-20 h-20 rounded-full overflow-hidden border bg-gray-50 flex items-center justify-center">
-                <template x-if="previewUrl">
-                  <img :src="previewUrl" class="w-full h-full object-cover">
-                </template>
-
-                <template x-if="!previewUrl">
-                  @if ($user->profile_photo)
-                    <img src="{{ asset('storage/profile_photos/' . $user->profile_photo) }}"
-                      class="w-full h-full object-cover">
-                  @else
-                    <i class="bi bi-person-circle text-3xl text-gray-400"></i>
-                  @endif
-                </template>
-              </div>
-
-              <div>
-                <template x-if="!editing">
-                  <button type="button" @click="startEdit"
-                    class="text-sm px-3 py-1 bg-blue-500 text-white rounded">Change</button>
-                </template>
-
-                <template x-if="editing">
-                  <button type="button" @click="triggerFile"
-                    class="text-sm px-3 py-1 bg-gray-200 rounded">Choose</button>
-                </template>
-              </div>
-            </div>
-
-            <input x-ref="file" type="file" name="profile_photo" class="hidden" accept="image/*"
-              @change="fileChosen">
+            <select name="religion" class="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 p-2">
+              <option value="">Choose</option>
+              @foreach (['Islam', 'Khatolik', 'Protestan', 'Hindu', 'Buddha', 'Kong Hu Cu'] as $r)
+                <option value="{{ $r }}" {{ old('religion', $user->religion) == $r ? 'selected' : '' }}>
+                  {{ $r }}</option>
+              @endforeach
+            </select>
           </div>
-
         </div>
 
-        {{-- BUTTONS (CENTER) --}}
-        <div class="mt-6 flex justify-center">
-          <button x-show="!editing" type="button" @click="startEdit"
-            class="px-6 py-2 rounded-full bg-blue-500 text-white shadow">
-            Edit
-          </button>
-
-          <template x-if="editing">
-            <div class="flex gap-3">
-              <button type="button" @click="cancelEdit" class="px-6 py-2 rounded bg-gray-200">Cancel</button>
-              <button type="submit" class="px-6 py-2 rounded bg-blue-600 text-white">Save</button>
-            </div>
-          </template>
+        {{-- BUTTONS --}}
+        <div class="mt-6 flex justify-end gap-3">
+          <button type="submit" class="px-6 py-2 rounded-full bg-blue-600 text-white shadow">Save Profile</button>
         </div>
 
       </form>
