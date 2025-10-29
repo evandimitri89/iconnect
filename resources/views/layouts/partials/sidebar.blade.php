@@ -41,8 +41,12 @@
 
 
       <li class="group relative">
-        <a href="#" :class="collapsed ? 'justify-center' : 'justify-start'"
-          class="flex items-center gap-3 px-3 py-2 hover:bg-[#2978BD] rounded-md text-base transition">
+        <a href="{{ route('extracurricular') }}"
+          :class="[
+              collapsed ? 'justify-center' : 'justify-start',
+              '{{ request()->routeIs('extracurricular') ? 'bg-[#1565C0] font-semibold' : '' }}',
+              'flex items-center gap-3 px-3 py-2 rounded-md text-base transition hover:bg-[#2978BD]'
+          ]">
           <i class="bi bi-people text-lg w-6 text-center shrink-0"></i>
           <span x-show="!collapsed" x-transition class="truncate">Extracurricular</span>
         </a>
@@ -143,7 +147,10 @@
       @endif
 
       <div x-show="!collapsed" x-transition class="flex-1 ml-2 text-left">
-        <span class="font-semibold block truncate text-sm">{{ Auth::user()->name }}</span>
+        <span class="font-semibold block truncate text-sm">
+          {{ Auth::user()->display_name ?? Auth::user()->username }}
+        </span>
+
         <span class="text-xs text-white/60">View account</span>
       </div>
 

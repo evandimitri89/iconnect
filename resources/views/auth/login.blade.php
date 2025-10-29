@@ -17,11 +17,9 @@
 
     {{-- Email --}}
     <div>
-      <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email Address</label>
-      <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="Enter your email"
-        class="bg-gray-50 border @error('email') border-red-500 @else border-gray-300 @enderror 
-        text-gray-900 text-sm rounded-lg block w-full p-2.5"
-        required />
+      <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email or Username</label>
+      <input type="text" name="login" id="login" placeholder="Username or Email" value="{{ old('login') }}"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
       @error('email')
         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
       @enderror

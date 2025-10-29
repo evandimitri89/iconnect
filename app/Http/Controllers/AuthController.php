@@ -9,21 +9,27 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // Tampilkan form login
+    // 🔹 Tampilkan form login
     public function showLogin()
     {
         return view('auth.login');
     }
 
-    // Proses login
+    // 🔹 Proses login (pakai username ATAU email)
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+        $request->validate([
+            'login' => ['required', 'string'], // bisa username atau email
+            'password' => ['required', 'string'],
         ]);
 
-        $remember = $request->has('remember'); // boolean
+        $login_type = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $credentials = [
+            $login_type => $request->login,
+            'password' => $request->password,
+        ];
+
+        $remember = $request->has('remember');
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
@@ -31,28 +37,29 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+            'login' => 'Username/email atau password salah.',
+        ])->onlyInput('login');
     }
 
-
-    // Tampilkan form register
+    // 🔹 Tampilkan form register
     public function showRegister()
     {
         return view('auth.register');
     }
 
-    // Proses register
+    // 🔹 Proses register
     public function register(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:50', 'unique:users,username'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'min:6', 'confirmed'],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'username' => $request->username,
+            'display_name' => $request->username,
+            'name' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
@@ -62,7 +69,7 @@ class AuthController extends Controller
         return redirect()->route('dashboard');
     }
 
-    // Logout
+    // 🔹 Logout
     public function logout(Request $request)
     {
         Auth::logout();

@@ -25,6 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
 });
 
+// Extracurricular
+Route::get('/extracurricular', function () {
+    return view('extracurricular.index');
+})->name('extracurricular')->middleware('auth');
+
 // Notification
 Route::get('/notification', function () {
     return view('notification.index');

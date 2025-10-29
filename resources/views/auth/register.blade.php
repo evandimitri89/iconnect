@@ -15,14 +15,14 @@
       </div>
     @endif
 
-    {{-- Name --}}
+    {{-- Username --}}
     <div>
-      <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Full Name</label>
-      <input type="text" name="name" id="name" value="{{ old('name') }}" placeholder="Enter your full name"
-        class="bg-gray-50 border @error('name') border-red-500 @else border-gray-300 @enderror 
+      <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Username</label>
+      <input type="text" name="username" id="username" value="{{ old('username') }}" placeholder="Enter your username"
+        class="bg-gray-50 border @error('username') border-red-500 @else border-gray-300 @enderror 
         text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         required />
-      @error('name')
+      @error('username')
         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
       @enderror
     </div>
