@@ -8,6 +8,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ExtracurricularController;
 
 Route::get('/', [ScheduleController::class, 'index'])
     ->name('dashboard')
@@ -26,9 +27,10 @@ Route::middleware('auth')->group(function () {
 });
 
 // Extracurricular
-Route::get('/extracurricular', function () {
-    return view('extracurricular.index');
-})->name('extracurricular')->middleware('auth');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/extracurriculars', [ExtracurricularController::class, 'index'])
+        ->name('extracurriculars');
+});
 
 // Notification
 Route::get('/notification', function () {

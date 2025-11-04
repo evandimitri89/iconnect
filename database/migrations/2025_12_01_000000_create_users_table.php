@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('display_name')->nullable();
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('role')->default('user');
+            $table->foreignId('role_id')->nullable()->constrained('roles')->nullOnDelete();
             $table->string('nis', 20)->unique()->nullable();
             $table->string('nisn', 20)->unique()->nullable();
             $table->string('birth_place')->nullable();

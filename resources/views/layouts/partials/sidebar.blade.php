@@ -41,10 +41,10 @@
 
 
       <li class="group relative">
-        <a href="{{ route('extracurricular') }}"
+        <a href="{{ route('extracurriculars') }}"
           :class="[
               collapsed ? 'justify-center' : 'justify-start',
-              '{{ request()->routeIs('extracurricular') ? 'bg-[#1565C0] font-semibold' : '' }}',
+              '{{ request()->routeIs('extracurriculars') ? 'bg-[#1565C0] font-semibold' : '' }}',
               'flex items-center gap-3 px-3 py-2 rounded-md text-base transition hover:bg-[#2978BD]'
           ]">
           <i class="bi bi-people text-lg w-6 text-center shrink-0"></i>

@@ -3,15 +3,6 @@
 @section('title', 'Dashboard')
 
 @section('content')
-  <div class="bg-white rounded-xl shadow p-6 mb-6">
-    <div class="flex items-start justify-between">
-      <div>
-        <div class="font-semi-bold text-xl text-gray-800">Good Evening,</div>
-        <div class="font-bold text-2xl text-gray-800">{{ Auth::user()->name }}</div>
-      </div>
-    </div>
-  </div>
-
   {{-- Banner --}}
   <div class="p-6 mt-6">
     <img src="{{ asset('img/picture.png') }}" alt="Illustration" class="w-full h-auto object-cover rounded-lg">
