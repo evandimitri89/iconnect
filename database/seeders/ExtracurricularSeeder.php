@@ -11,17 +11,37 @@ class ExtracurricularSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            ['name' => 'Basketball', 'description' => 'Team olahraga bola basket sekolah.', 'mentor' => 'Pak Andi'],
-            ['name' => 'Paduan Suara', 'description' => 'Ekstrakurikuler vokal dan musik.', 'mentor' => 'Bu Sinta'],
-            ['name' => 'Pramuka', 'description' => 'Kegiatan kepanduan dan kedisiplinan.', 'mentor' => 'Pak Joko'],
+            [
+                'name' => 'Basketball',
+                'teachers' => 'Pak Andi',
+                'day' => 'Monday',
+                'time' => '15:00 - 17:00',
+                'room_id' => 1
+            ],
+            [
+                'name' => 'Paduan Suara',
+                'teachers' => 'Bu Sinta',
+                'day' => 'Tuesday',
+                'time' => '14:00 - 16:00',
+                'room_id' => 2
+            ],
+            [
+                'name' => 'Pramuka',
+                'teachers' => 'Pak Joko',
+                'day' => 'Friday',
+                'time' => '13:00 - 17:00',
+                'room_id' => 3
+            ],
         ];
 
         foreach ($data as $item) {
             Extracurricular::create([
                 'name' => $item['name'],
                 'slug' => Str::slug($item['name']),
-                'description' => $item['description'],
-                'mentor' => $item['mentor'],
+                'teachers' => $item['teachers'],
+                'day' => $item['day'],
+                'time' => $item['time'],
+                'room_id' => $item['room_id'],
             ]);
         }
     }

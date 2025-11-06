@@ -9,6 +9,7 @@ use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ExtracurricularController;
+use App\Http\Controllers\RoomReservationController;
 
 Route::get('/', [ScheduleController::class, 'index'])
     ->name('dashboard')
@@ -27,9 +28,24 @@ Route::middleware('auth')->group(function () {
 });
 
 // Extracurricular
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/extracurriculars', [ExtracurricularController::class, 'index'])
         ->name('extracurriculars');
+});
+
+// Room Reservation
+Route::middleware('auth')->group(function () {
+    Route::get('/room-reservations', [RoomReservationController::class, 'index'])
+        ->name('room-reservations');
+
+    Route::get('/room-reservations/create', [RoomReservationController::class, 'create'])
+        ->name('room-reservations.create');
+
+    Route::post('/room-reservations', [RoomReservationController::class, 'store'])
+        ->name('room-reservations.store');
+
+    Route::get('/room-reservations/{reservation}', [RoomReservationController::class, 'show'])
+        ->name('room-reservations.show');
 });
 
 // Notification
@@ -42,9 +58,9 @@ Route::get('/lostfound', function () {
     return view('lostfound.index');
 })->name('lostfound.index');
 
-// Schedules
-Route::resource('schedules', ScheduleController::class)->middleware('auth');
-Route::get('/schedules/{schedule}/delete', [ScheduleController::class, 'delete'])
-    ->name('schedules.delete')
-    ->middleware('auth');
-
+// Schedule
+Route::middleware('auth')->group(function () {
+    Route::resource('schedules', ScheduleController::class);
+    Route::get('/schedules/{schedule}/delete', [ScheduleController::class, 'delete'])
+        ->name('schedules.delete');
+});

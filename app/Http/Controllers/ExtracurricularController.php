@@ -10,7 +10,11 @@ class ExtracurricularController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $extracurriculars = $user->extracurriculars;
+
+        $extracurriculars = $user->extracurriculars()
+            ->with('room.floor')
+            ->get();
+
         return view('extracurriculars.index', compact('extracurriculars'));
     }
 }

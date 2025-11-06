@@ -12,7 +12,9 @@ return new class extends Migration {
             $table->foreignId('extracurricular_id')->constrained()->onDelete('cascade');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
+            $table->primary(['user_id', 'extracurricular_id']);
         });
+
     }
 
     public function down(): void

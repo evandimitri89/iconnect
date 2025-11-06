@@ -10,9 +10,17 @@ return new class extends Migration {
         Schema::create('extracurriculars', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('teachers')->nullable();
             $table->string('slug')->unique();
-            $table->text('description')->nullable();
-            $table->string('mentor')->nullable();
+
+            $table->foreignId('room_id')
+                ->nullable()
+                ->constrained('rooms')
+                ->nullOnDelete();
+
+            $table->string('day')->nullable();
+            $table->string('time')->nullable();
+
             $table->timestamps();
         });
     }

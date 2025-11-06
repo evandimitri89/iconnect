@@ -21,14 +21,7 @@
     <!-- MAIN WRAPPER -->
     <div class="transition-all duration-300 flex-1" :class="collapsed ? 'ml-16' : 'ml-60'">
       <main class="p-6 min-h-screen overflow-y-auto">
-        <div class="bg-white rounded-xl shadow p-6 mb-6">
-          <div class="flex items-start justify-between">
-            <div>
-              <div class="font-semi-bold text-xl text-gray-800">Good Evening,</div>
-              <div class="font-bold text-2xl text-gray-800">{{ Auth::user()->name }}</div>
-            </div>
-          </div>
-        </div>
+
         @yield('content')
       </main>
     </div>

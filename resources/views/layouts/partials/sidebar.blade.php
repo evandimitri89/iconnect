@@ -58,8 +58,12 @@
       </li>
 
       <li class="group relative">
-        <a href="#" :class="collapsed ? 'justify-center' : 'justify-start'"
-          class="flex items-center gap-3 px-3 py-2 hover:bg-[#2978BD] rounded-md text-base transition">
+        <a href="{{ route('room-reservations') }}"
+          :class="[
+              collapsed ? 'justify-center' : 'justify-start',
+              '{{ request()->routeIs('room-reservations') ? 'bg-[#1565C0] font-semibold' : '' }}',
+              'flex items-center gap-3 px-3 py-2 rounded-md text-base transition hover:bg-[#2978BD]'
+          ]">
           <i class="bi bi-door-open text-lg w-6 text-center shrink-0"></i>
           <span x-show="!collapsed" x-transition class="truncate">Room Reservation</span>
         </a>

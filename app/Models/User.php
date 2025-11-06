@@ -64,7 +64,13 @@ class User extends Authenticatable
     public function extracurriculars()
     {
         return $this->belongsToMany(Extracurricular::class)
+            ->withPivot('status')
             ->withTimestamps();
     }
+    public function roomReservations()
+    {
+        return $this->hasMany(RoomReservation::class);
+    }
+
 
 }
