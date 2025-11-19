@@ -9,12 +9,13 @@ class RoomReservation extends Model
     protected $fillable = [
         'user_id',
         'room_id',
+        'purpose',
         'reserved_date',
         'start_time',
         'end_time',
         'status',
-        'purpose',
     ];
+
 
     public function room()
     {

@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
 
 // Room Reservation
 Route::middleware('auth')->group(function () {
+
     Route::get('/room-reservations', [RoomReservationController::class, 'index'])
         ->name('room-reservations');
 
@@ -46,7 +47,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/room-reservations/{reservation}', [RoomReservationController::class, 'show'])
         ->name('room-reservations.show');
+
+    Route::delete('/room-reservations/{id}', [RoomReservationController::class, 'destroy'])
+        ->name('room-reservations.destroy');
+
 });
+
 
 // Notification
 Route::get('/notification', function () {
