@@ -1,18 +1,20 @@
 @extends('layouts.app')
 
-@section('title', 'Delete Schedule')
+@section('title', 'Delete Lost & Found')
 
 @section('content')
-  <div class="min-h-screen flex items-center justify-center px-4">
+
+  <div class="min-h-screen flex items-center justify-center">
+
     <div class="max-w-xl w-full bg-white shadow-md rounded-xl p-6">
       <h2 class="text-xl font-semibold text-gray-800 mb-4">Delete Confirmation</h2>
 
       <p class="text-gray-600 mb-6">
-        Are you sure you want to delete schedule:
-        <strong class="text-red-600">{{ $schedule->subject }}</strong>?
+        Are you sure you want to delete:
+        <strong class="text-red-600">{{ $item->item_name }}</strong>?
       </p>
 
-      <form action="{{ route('schedules.destroy', $schedule->id) }}" method="POST" class="flex gap-3">
+      <form action="{{ route('lost-found.destroy', $item->id) }}" method="POST" class="flex gap-3">
         @csrf
         @method('DELETE')
 
@@ -20,11 +22,13 @@
           Yes, Delete
         </button>
 
-        <a href="{{ route('schedules.index') }}"
+        <a href="{{ route('lost-found') }}"
           class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md font-medium">
           Cancel
         </a>
       </form>
     </div>
+
   </div>
+
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Lost & Found')
+@section('title', 'Meetings')
 
 @section('content')
 
@@ -19,7 +19,6 @@
     }
   @endphp
 
-
   <div class="bg-white rounded-xl shadow p-6 mb-6">
     <div>
       <div class="text-xl text-gray-800">{{ $greeting }},</div>
@@ -29,6 +28,7 @@
 
   {{-- Notifications --}}
   <div class="bg-white rounded-xl shadow p-6 mb-6">
+
     @if (session('success'))
       <div class="mb-4 p-3 bg-green-100 text-green-700 rounded-md">
         {{ session('success') }}
@@ -41,8 +41,9 @@
       </div>
     @endif
 
-    <h2 class="text-xl font-semibold mb-4">Lost & Found Items</h2>
+    <h2 class="text-xl font-semibold mb-4">Meeting Schedule</h2>
 
+    {{-- Table --}}
     <table class="min-w-full leading-normal w-full table-fixed">
       <thead>
         <tr>
@@ -54,12 +55,17 @@
           <th
             class="px-5 py-3 border-b-2 border-gray-200 bg-[#1E88E5]
                      text-left text-base text-white uppercase tracking-wider">
-            Name
+            Followed By
           </th>
           <th
             class="px-5 py-3 border-b-2 border-gray-200 bg-[#1E88E5]
                      text-left text-base text-white uppercase tracking-wider">
-            Description
+            Topic
+          </th>
+          <th
+            class="px-5 py-3 border-b-2 border-gray-200 bg-[#1E88E5]
+                     text-left text-base text-white uppercase tracking-wider">
+            Location
           </th>
           <th
             class="px-5 py-3 border-b-2 border-gray-200 bg-[#1E88E5]
@@ -69,104 +75,94 @@
           <th
             class="px-5 py-3 border-b-2 border-gray-200 bg-[#1E88E5]
                      text-left text-base text-white uppercase tracking-wider">
-            Reported By
+            Time
           </th>
-          <th
-            class="px-5 py-3 border-b-2 border-gray-200 bg-[#1E88E5]
-                     text-left text-base text-white uppercase tracking-wider">
-            Status
-          </th>
-          <th
-            class="px-5 py-3 border-b-2 border-gray-200 bg-[#1E88E5]
-                     text-left text-base text-white uppercase tracking-wider">
-            Action
-          </th>
+
+          {{-- ACTION ONLY FOR OSIS --}}
+          @if (Auth::user()->role === 'osis')
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-[#1E88E5]
+                       text-left text-base text-white uppercase tracking-wider">
+              Action
+            </th>
+          @endif
         </tr>
       </thead>
 
       <tbody>
-        @forelse ($items as $index => $item)
+        @forelse ($meetings as $index => $meeting)
           <tr class="border-b border-gray-200">
 
-            {{-- Index --}}
+            {{-- # --}}
             <td class="px-5 py-5 bg-white text-base">
               {{ $index + 1 }}
             </td>
 
-            {{-- Name --}}
+            {{-- Followed by --}}
             <td class="px-5 py-5 bg-white text-base">
-              {{ $item->item_name }}
+              {{ $meeting->followed_by }}
             </td>
 
-            {{-- Description --}}
+            {{-- Topic --}}
             <td class="px-5 py-5 bg-white text-base">
-              {{ $item->description }}
+              {{ $meeting->topic }}
             </td>
 
-            {{-- Found/Lost Date --}}
+            {{-- Location --}}
             <td class="px-5 py-5 bg-white text-base">
-              {{ \Carbon\Carbon::parse($item->found_date)->format('d F Y') }}
+              {{ $meeting->location }}
             </td>
 
-            {{-- Reporter --}}
+            {{-- Date --}}
             <td class="px-5 py-5 bg-white text-base">
-              {{ $item->reporter->name }}
+              {{ \Carbon\Carbon::parse($meeting->date)->format('d F Y') }}
             </td>
 
-            {{-- Status --}}
+            {{-- Time --}}
             <td class="px-5 py-5 bg-white text-base">
-              @if ($item->status === 'lost')
-                <span class="bg-yellow-200 text-yellow-700 px-3 py-1 rounded-full text-sm">Lost</span>
-              @else
-                <span class="bg-green-200 text-green-700 px-3 py-1 rounded-full text-sm">Found</span>
-              @endif
+              {{ \Carbon\Carbon::parse($meeting->time)->format('H:i') }}
             </td>
 
-            {{-- Action --}}
-            <td class="px-5 py-5 bg-white text-base">
+            {{-- ACTION (Only OSIS) --}}
+            @if (Auth::user()->role === 'osis')
+              <td class="px-5 py-5 bg-white text-base flex gap-2">
 
-              {{-- Claim Button --}}
-              @if ($item->status === 'found' && $item->reported_by != Auth::id() && $item->claimed_by === null)
-                <form action="{{ route('lost-found.claim', $item->id) }}" method="POST" class="inline">
-                  @csrf
-                  <button onclick="confirmClaim('{{ route('lost-found.claim', $item->id) }}')"
-                    class="p-2 rounded-md bg-green-100 text-green-700 hover:bg-green-200 transition">
-                    Claim
-                  </button>
+                {{-- Edit --}}
+                <a href="{{ route('meetings.edit', $meeting->id) }}"
+                  class="p-2 rounded-md bg-blue-100 text-blue-700 hover:bg-blue-200 transition">
+                  <i class="bi bi-pencil"></i>
+                </a>
 
-                </form>
-              @endif
-
-              {{-- Delete Button --}}
-              @if ($item->reported_by == Auth::id())
-                <a href="{{ route('lost-found.delete', $item->id) }}"
+                {{-- Delete --}}
+                <a href="{{ route('meetings.delete', $meeting->id) }}"
                   class="p-2 rounded-md bg-red-100 text-red-700 hover:bg-red-200 transition">
                   <i class="bi bi-trash"></i>
                 </a>
-              @endif
 
-            </td>
-
+              </td>
+            @endif
 
           </tr>
 
         @empty
           <tr>
-            <td colspan="7" class="px-5 py-5 text-center text-gray-500">
-              No items found.
+            <td colspan="{{ Auth::user()->role === 'osis' ? 7 : 6 }}" class="px-5 py-5 text-center text-gray-500">
+              No meetings found.
             </td>
           </tr>
         @endforelse
       </tbody>
     </table>
 
-    {{-- Add Button --}}
-    <div class="text-center mt-6">
-      <a href="{{ route('lost-found.create') }}"
-        class="bg-[#1E88E5] hover:bg-[#2978BD] text-white font-bold py-2 px-4 rounded-md">
-        <i class="bi bi-plus"></i> Report
-      </a>
-    </div>
+    {{-- Add Button (Only OSIS) --}}
+    @if (Auth::user()->role === 'osis')
+      <div class="text-center mt-6">
+        <a href="{{ route('meetings.create') }}"
+          class="bg-[#1E88E5] hover:bg-[#2978BD] text-white font-bold py-2 px-4 rounded-md">
+          <i class="bi bi-plus"></i> Add Meeting
+        </a>
+      </div>
+    @endif
 
   </div>
 

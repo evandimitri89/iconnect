@@ -100,23 +100,16 @@
 
       <ul class="space-y-1">
         <li class="group relative">
-          <a href="#" :class="collapsed ? 'justify-center' : 'justify-start'"
-            class="flex items-center gap-3 px-3 py-2 hover:bg-[#2978BD] rounded-md text-base transition">
-            <i class="bi bi-box2 text-lg w-6 text-center shrink-0"></i>
-            <span x-show="!collapsed" x-transition>Inventory</span>
-          </a>
-          <span x-show="collapsed" x-cloak
-            class="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-md px-3 py-1 text-sm shadow-sm opacity-0 group-hover:opacity-100 bg-[#1E88E5]">
-            Inventory
-          </span>
-        </li>
-
-        <li class="group relative">
-          <a href="#" :class="collapsed ? 'justify-center' : 'justify-start'"
-            class="flex items-center gap-3 px-3 py-2 hover:bg-[#2978BD] rounded-md text-base transition">
+          <a href="{{ route('meetings.index') }}"
+            :class="[
+                collapsed ? 'justify-center' : 'justify-start',
+                '{{ request()->routeIs('meetings.*') ? 'bg-[#1565C0] font-semibold' : '' }}',
+                'flex items-center gap-3 px-3 py-2 rounded-md text-base transition hover:bg-[#2978BD]'
+            ]">
             <i class="bi bi-calendar-event text-lg w-6 text-center shrink-0"></i>
-            <span x-show="!collapsed" x-transition>Meeting</span>
+            <span x-show="!collapsed" x-transition class="truncate">Meeting</span>
           </a>
+
           <span x-show="collapsed" x-cloak
             class="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-md px-3 py-1 text-sm shadow-sm opacity-0 group-hover:opacity-100 bg-[#1E88E5]">
             Meeting
@@ -125,6 +118,7 @@
       </ul>
     </div>
   @endif
+
 
 
   <div class="px-3 py-2 mt-3">

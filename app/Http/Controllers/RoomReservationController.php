@@ -60,4 +60,16 @@ class RoomReservationController extends Controller
         return redirect()->route('room-reservations')
             ->with('success', 'Reservation cancelled.');
     }
+
+    public function delete($id)
+    {
+        $reservation = RoomReservation::findOrFail($id);
+
+        if ($reservation->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        return view('room-reservations.delete', compact('reservation'));
+    }
+
 }

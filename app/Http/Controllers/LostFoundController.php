@@ -62,6 +62,18 @@ class LostFoundController extends Controller
             ->with('success', 'You have successfully claimed this item. It has been removed.');
     }
 
+    public function deletePage($id)
+    {
+        $item = LostFoundItem::findOrFail($id);
+
+        if ($item->reported_by !== Auth::id()) {
+            return back()->with('error', 'You are not allowed to delete this item.');
+        }
+
+        return view('lost-found.delete', compact('item'));
+    }
+
+
     public function destroy($id)
     {
         $item = LostFoundItem::findOrFail($id);

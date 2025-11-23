@@ -29,7 +29,17 @@
 
   {{-- Table --}}
   <div class="bg-white rounded-xl shadow p-6">
+    @if (session('success'))
+      <div class="mb-4 p-3 bg-green-100 text-green-700 rounded-md">
+        {{ session('success') }}
+      </div>
+    @endif
 
+    @if (session('error'))
+      <div class="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
+        {{ session('error') }}
+      </div>
+    @endif
     <h2 class="text-xl font-semibold mb-4">Room Reservations</h2>
 
     <table class="min-w-full leading-normal w-full table-fixed">
@@ -99,9 +109,11 @@
                   @csrf
                   @method('DELETE')
 
-                  <button type="submit" class="p-2 rounded-md bg-red-100 text-red-700 hover:bg-red-200 transition">
+                  <a href="{{ route('room-reservations.delete', $reservation->id) }}"
+                    class="p-2 rounded-md bg-red-100 text-red-700 hover:bg-red-200 transition">
                     <i class="bi bi-trash"></i>
-                  </button>
+                  </a>
+
                 </form>
               @else
                 <span class="text-gray-400">—</span>
