@@ -12,7 +12,7 @@ Fokus: Dashboard, Extracurricular, Room Reservation, Lost & Found, Inventory, No
 ---
 
 ## Ringkasan
-Aplikasi ini dikembangkan untuk memudahkan kegiatan administrasi OSIS dan sekolah (peminjaman ruang, inventaris OSIS, lost & found, pendaftaran lomba, dsb.). Dibangun menggunakan Laravel sebagai backend dan Bootstrap dan Tailwind untuk UI.
+Aplikasi ini dikembangkan untuk memudahkan kegiatan administrasi OSIS dan sekolah (peminjaman ruang, rapat OSIS, lost & found, pendaftaran ekskul, dsb.). Dibangun menggunakan Laravel sebagai backend dan Bootstrap dan Tailwind untuk UI.
 
 ---
 
