@@ -17,17 +17,17 @@
   <div x-data="sidebar()" class="flex">
     <!-- SIDEBAR -->
     @include('layouts.partials.sidebar')
-
     <!-- MAIN WRAPPER -->
     <div class="transition-all duration-300 flex-1" :class="collapsed ? 'ml-16' : 'ml-60'">
       <main class="p-6 min-h-screen overflow-y-auto">
-
         @yield('content')
       </main>
     </div>
   </div>
 
   <script src="//unpkg.com/alpinejs" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 

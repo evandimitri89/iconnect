@@ -75,8 +75,12 @@
       </li>
 
       <li class="group relative">
-        <a href="{{ route('lostfound.index') }}" :class="collapsed ? 'justify-center' : 'justify-start'"
-          class="flex items-center gap-3 px-3 py-2 hover:bg-[#2978BD] rounded-md text-base transition">
+        <a href="{{ route('lost-found') }}"
+          :class="[
+              collapsed ? 'justify-center' : 'justify-start',
+              '{{ request()->routeIs('lost-found') ? 'bg-[#1565C0] font-semibold' : '' }}',
+              'flex items-center gap-3 px-3 py-2 rounded-md text-base transition hover:bg-[#2978BD]'
+          ]">
           <i class="bi bi-search text-lg w-6 text-center shrink-0"></i>
           <span x-show="!collapsed" x-transition class="truncate">Lost &amp; Found</span>
         </a>
@@ -90,34 +94,38 @@
     </ul>
   </div>
 
-  <div class="px-3 py-2 mt-3">
-    <div x-show="!collapsed" class="text-[10px] text-white/50 font-bold py-1">OSIS</div>
-    <ul class="space-y-1">
-      <li class="group relative">
-        <a href="#" :class="collapsed ? 'justify-center' : 'justify-start'"
-          class="flex items-center gap-3 px-3 py-2 hover:bg-[#2978BD] rounded-md text-base transition">
-          <i class="bi bi-box2 text-lg w-6 text-center shrink-0"></i>
-          <span x-show="!collapsed" x-transition>Inventory</span>
-        </a>
-        <span x-show="collapsed" x-cloak
-          class="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-md px-3 py-1 text-sm shadow-sm transition-opacity duration-150 opacity-0 group-hover:opacity-100 bg-[#1E88E5]">
-          Inventory
-        </span>
-      </li>
+  @if (Auth::user()->role_id == 2)
+    <div class="px-3 py-2 mt-3">
+      <div x-show="!collapsed" class="text-[10px] text-white/50 font-bold py-1">OSIS</div>
 
-      <li class="group relative">
-        <a href="#" :class="collapsed ? 'justify-center' : 'justify-start'"
-          class="flex items-center gap-3 px-3 py-2 hover:bg-[#2978BD] rounded-md text-base transition">
-          <i class="bi bi-calendar-event text-lg w-6 text-center shrink-0"></i>
-          <span x-show="!collapsed" x-transition>Meeting</span>
-        </a>
-        <span x-show="collapsed" x-cloak
-          class="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-md px-3 py-1 text-sm shadow-sm transition-opacity duration-150 opacity-0 group-hover:opacity-100 bg-[#1E88E5]">
-          Meeting
-        </span>
-      </li>
-    </ul>
-  </div>
+      <ul class="space-y-1">
+        <li class="group relative">
+          <a href="#" :class="collapsed ? 'justify-center' : 'justify-start'"
+            class="flex items-center gap-3 px-3 py-2 hover:bg-[#2978BD] rounded-md text-base transition">
+            <i class="bi bi-box2 text-lg w-6 text-center shrink-0"></i>
+            <span x-show="!collapsed" x-transition>Inventory</span>
+          </a>
+          <span x-show="collapsed" x-cloak
+            class="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-md px-3 py-1 text-sm shadow-sm opacity-0 group-hover:opacity-100 bg-[#1E88E5]">
+            Inventory
+          </span>
+        </li>
+
+        <li class="group relative">
+          <a href="#" :class="collapsed ? 'justify-center' : 'justify-start'"
+            class="flex items-center gap-3 px-3 py-2 hover:bg-[#2978BD] rounded-md text-base transition">
+            <i class="bi bi-calendar-event text-lg w-6 text-center shrink-0"></i>
+            <span x-show="!collapsed" x-transition>Meeting</span>
+          </a>
+          <span x-show="collapsed" x-cloak
+            class="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-md px-3 py-1 text-sm shadow-sm opacity-0 group-hover:opacity-100 bg-[#1E88E5]">
+            Meeting
+          </span>
+        </li>
+      </ul>
+    </div>
+  @endif
+
 
   <div class="px-3 py-2 mt-3">
     <div x-show="!collapsed" class="text-[10px] text-white/50 font-bold py-1">Preference</div>

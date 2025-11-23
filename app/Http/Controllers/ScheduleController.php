@@ -25,10 +25,10 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'subject' => 'required|string|max:255',
-            'type' => 'required|string|max:100',
-            'description' => 'nullable|string',
-            'status' => 'required|in:Pending,Ongoing,Done',
+            'subject' => 'required',
+            'type' => 'required',
+            'description' => 'nullable',
+            'status' => 'required',
             'deadline' => 'nullable|date',
         ]);
 
@@ -38,11 +38,13 @@ class ScheduleController extends Controller
             'description' => $request->description,
             'status' => $request->status,
             'deadline' => $request->deadline,
-            'user_id' => Auth::id(),
+            'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Schedule berhasil ditambahkan.');
+        return redirect()->route('schedules.index')
+            ->with('success', 'Schedule created successfully.');
     }
+
 
     public function edit(Schedule $schedule)
     {
@@ -65,16 +67,19 @@ class ScheduleController extends Controller
         return redirect()->route('dashboard')->with('success', 'Schedule berhasil diperbarui.');
     }
 
-    // Halaman konfirmasi delete
-    public function delete(Schedule $schedule)
+    public function delete($id)
     {
+        $schedule = Schedule::findOrFail($id);
         return view('schedules.delete', compact('schedule'));
     }
 
-    // Eksekusi delete
-    public function destroy(Schedule $schedule)
+
+    public function destroy($id)
     {
+        $schedule = Schedule::findOrFail($id);
         $schedule->delete();
+
         return redirect()->route('dashboard')->with('success', 'Schedule berhasil dihapus.');
     }
+
 }

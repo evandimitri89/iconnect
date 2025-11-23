@@ -14,6 +14,8 @@ class FloorSeeder extends Seeder
             ['name' => 'Lantai 2'],
             ['name' => 'Lantai 3'],
             ['name' => 'Lantai 4'],
+            ['name' => 'Lantai 5'],
+            ['name' => 'Lapangan'],
         ];
 
         foreach ($floors as $floor) {

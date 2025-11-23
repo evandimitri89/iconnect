@@ -10,9 +10,7 @@ class RoomReservationController extends Controller
 {
     public function index()
     {
-        $reservations = auth()->user()
-            ->roomReservations()
-            ->with('room.floor')
+        $reservations = RoomReservation::with(['room.floor', 'user'])
             ->latest()
             ->get();
 
@@ -38,49 +36,26 @@ class RoomReservationController extends Controller
             'user_id' => auth()->id(),
             'room_id' => $request->room_id,
             'purpose' => $request->purpose,
-            'reserved_date' => now()->toDateString(), // otomatis hari ini
+            'reserved_date' => now()->toDateString(),
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
-            'status' => 'pending', // ikut enum di migration
+            'status' => 'pending',
         ]);
 
         return redirect()->route('room-reservations')
             ->with('success', 'Reservation created!');
     }
 
-    public function edit($id)
-    {
-        $reservation = RoomReservation::findOrFail($id);
-        $rooms = Room::with('floor')->get();
-
-        return view('room-reservations.edit', compact('reservation', 'rooms'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'room_id' => 'required',
-            'purpose' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
-        ]);
-
-        $reservation = RoomReservation::findOrFail($id);
-
-        $reservation->update([
-            'room_id' => $request->room_id,
-            'purpose' => $request->purpose,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-        ]);
-
-        return redirect()->route('room-reservations')
-            ->with('success', 'Reservation updated!');
-    }
-
     public function destroy($id)
     {
-        RoomReservation::findOrFail($id)->delete();
+        $reservation = RoomReservation::findOrFail($id);
+
+        if ($reservation->user_id !== auth()->id()) {
+            return redirect()->route('room-reservations')
+                ->with('error', 'You are not allowed to cancel this reservation.');
+        }
+
+        $reservation->delete();
 
         return redirect()->route('room-reservations')
             ->with('success', 'Reservation cancelled.');

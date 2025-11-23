@@ -62,6 +62,6 @@
 @endsection
 
 @php
-  $title = 'iConnect Login';
+  $title = 'Login';
   $subtitle = 'Sign in';
 @endphp

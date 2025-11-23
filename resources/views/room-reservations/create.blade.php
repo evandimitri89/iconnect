@@ -16,11 +16,12 @@
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Room</label>
             <select name="room_id"
-              class="w-full border border-gray-300 rounded-lg shadow-sm p-2 focus:ring-2 focus:ring-blue-500 transition"
+              class="w-full border border-gray-300 rounded-lg shadow-sm p-2 outline-none focus:outline-none
+                     focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
               required>
               <option value="">Choose room...</option>
               @foreach ($rooms as $room)
-                <option value="{{ $room->id }}">{{ $room->name }} (Floor {{ $room->floor->number }})</option>
+                <option value="{{ $room->id }}">{{ $room->name }}</option>
               @endforeach
             </select>
           </div>
@@ -29,36 +30,46 @@
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Purpose</label>
             <input type="text" name="purpose" placeholder="e.g. Study Group, Meeting..."
-              class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 transition" required>
+              class="w-full border border-gray-300 rounded-lg shadow-sm p-2 outline-none focus:outline-none
+                     focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+              required>
           </div>
 
           {{-- Date --}}
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
-            <input type="date" name="date"
-              class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 transition" required>
+            <input type="date" name="date" value="{{ now()->toDateString() }}"
+              class="w-full border border-gray-300 rounded-lg shadow-sm p-2 outline-none focus:outline-none
+                     focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+              required>
           </div>
 
           {{-- Start Time --}}
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
             <input type="time" name="start_time"
-              class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 transition" required>
+              class="w-full border border-gray-300 rounded-lg shadow-sm p-2 outline-none focus:outline-none
+                     focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+              required>
           </div>
 
           {{-- End Time --}}
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">End Time</label>
             <input type="time" name="end_time"
-              class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 transition" required>
+              class="w-full border border-gray-300 rounded-lg rounded-lg shadow-sm p-2 outline-none focus:outline-none
+                     focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+              required>
           </div>
 
           {{-- Notes --}}
           <div class="md:col-span-2">
             <label class="block text-sm font-medium text-gray-700 mb-1">Notes (optional)</label>
             <textarea name="notes" rows="3" placeholder="Optional notes..."
-              class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 transition"></textarea>
+              class="w-full border border-gray-300 rounded-lg shadow-sm p-2 outline-none focus:outline-none
+                     focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></textarea>
           </div>
+
         </div>
 
         {{-- Submit --}}
@@ -72,6 +83,7 @@
             Reserve
           </button>
         </div>
+
       </form>
     </div>
   </div>

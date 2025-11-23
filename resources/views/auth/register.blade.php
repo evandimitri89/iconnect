@@ -80,6 +80,6 @@
 @endsection
 
 @php
-  $title = 'iConnect Register';
+  $title = 'Register';
   $subtitle = 'Create an account';
 @endphp
