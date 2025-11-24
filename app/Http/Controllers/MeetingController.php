@@ -35,11 +35,6 @@ class MeetingController extends Controller
         return redirect()->route('meetings.index')->with('success', 'Meeting created successfully.');
     }
 
-    public function edit(Meeting $meeting)
-    {
-        return view('meetings.edit', compact('meeting'));
-    }
-
     public function update(Request $request, Meeting $meeting)
     {
         $request->validate([

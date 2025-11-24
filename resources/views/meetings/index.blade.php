@@ -155,7 +155,7 @@
     </table>
 
     {{-- Add Button (Only OSIS) --}}
-    @if (Auth::user()->role === 'osis')
+    @if (Auth::user()->role_id == 2)
       <div class="text-center mt-6">
         <a href="{{ route('meetings.create') }}"
           class="bg-[#1E88E5] hover:bg-[#2978BD] text-white font-bold py-2 px-4 rounded-md">

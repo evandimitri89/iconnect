@@ -9,17 +9,15 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // 🔹 Tampilkan form login
     public function showLogin()
     {
         return view('auth.login');
     }
 
-    // 🔹 Proses login (pakai username ATAU email)
     public function login(Request $request)
     {
         $request->validate([
-            'login' => ['required', 'string'], // bisa username atau email
+            'login' => ['required', 'string'],
             'password' => ['required', 'string'],
         ]);
 
@@ -33,21 +31,25 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
-            return redirect()->intended(route('dashboard'));
+
+            if (Auth::user()->role->name === 'admin') {
+                return redirect()->route('admin.dashboard');
+            }
+
+            return redirect()->route('dashboard');
         }
+
 
         return back()->withErrors([
             'login' => 'Username/email atau password salah.',
         ])->onlyInput('login');
     }
 
-    // 🔹 Tampilkan form register
     public function showRegister()
     {
         return view('auth.register');
     }
 
-    // 🔹 Proses register
     public function register(Request $request)
     {
         $request->validate([
@@ -69,7 +71,6 @@ class AuthController extends Controller
         return redirect()->route('dashboard');
     }
 
-    // 🔹 Logout
     public function logout(Request $request)
     {
         Auth::logout();

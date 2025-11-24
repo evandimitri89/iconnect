@@ -24,7 +24,7 @@
         <a href="{{ route('dashboard') }}"
           :class="[
               collapsed ? 'justify-center' : 'justify-start',
-              '{{ request()->routeIs('dashboard') ? 'bg-[#1565C0] font-semibold' : '' }}',
+              '{{ request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') ? 'bg-[#1565C0] font-semibold' : '' }}',
               'flex items-center gap-3 px-3 py-2 rounded-md text-base transition hover:bg-[#2978BD]'
           ]">
 
@@ -94,7 +94,7 @@
     </ul>
   </div>
 
-  @if (Auth::user()->role_id == 2)
+  @if (Auth::user()->role_id == 2 || Auth::user()->role_id == 1)
     <div class="px-3 py-2 mt-3">
       <div x-show="!collapsed" class="text-[10px] text-white/50 font-bold py-1">OSIS</div>
 

@@ -3,11 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\MeetingController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\LostFoundController;
 use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\RoomReservationController;
+use App\Http\Controllers\admin\AdminDashboardController;
 
 // Auth
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -19,7 +20,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Dashboard
 Route::get('/', [ScheduleController::class, 'index'])
     ->name('dashboard')
-    ->middleware('auth');
+    ->middleware('auth', 'no-admin');
 
 // Profile
 Route::middleware('auth')->group(function () {
@@ -100,3 +101,12 @@ Route::middleware(['auth', 'role:2'])->group(function () {
     Route::post('/meetings', [MeetingController::class, 'store'])->name('meetings.store');
 
 });
+
+// Admin Dashboard
+Route::middleware(['role:admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+            ->name('dashboard');
+    });
